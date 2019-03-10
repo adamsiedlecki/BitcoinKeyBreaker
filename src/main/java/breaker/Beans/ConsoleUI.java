@@ -1,11 +1,18 @@
 package breaker.Beans;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
-@Component
+
+
+@Component("consoleUI")
 public class ConsoleUI {
+
+    @Autowired
+    Attacker attecker;
 
     public void getStarted(){
         System.out.println(" /$$$$$$$  /$$   /$$                         /$$                      \n" +
@@ -46,15 +53,26 @@ public class ConsoleUI {
         System.out.println("1. Bruteforce by hashing numbers like x, x+1, x+2 etc.");
         System.out.println("2. Dictionary attack - you provide a dictionary file with words in new lines.");
         String method = input.nextLine();
-        while(!method.equals("1")||!method.equals("2")){
+        while(!method.equals("1")&&!method.equals("2")){
             System.out.println("Wrong value! Please enter 1 or 2 !");
             method = input.nextLine();
         }
 
         if(method.equals("1")){
             //Hashing numbers method
+            System.out.println("Enter initial value:");
+            String init = input.nextLine();
+            while(!isNumeric(init)){
+                System.out.println("Value isn't a number, try again: ");
+                init = input.nextLine();
+            }
+            attecker.numberAttack(new BigInteger(init));
+            System.out.println("Attacking in progress...");
         }else if(method.equals("2")){
             //Hashing records from dictionary
         }
+    }
+    private boolean isNumeric(String strNum) {
+        return strNum.matches("-?\\d+(\\.\\d+)?");
     }
 }
