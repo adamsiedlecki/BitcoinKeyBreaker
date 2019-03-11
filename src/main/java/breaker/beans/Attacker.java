@@ -1,12 +1,9 @@
-package breaker.Beans;
+package breaker.beans;
 
-import breaker.Configuration.Conf;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

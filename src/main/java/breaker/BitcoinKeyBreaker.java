@@ -1,14 +1,10 @@
 package breaker;
 
-import breaker.Beans.ConsoleUI;
-import breaker.Beans.KeyGenerator;
-import breaker.Configuration.Conf;
+import breaker.beans.ConsoleUI;
+import breaker.configuration.Conf;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-
-import java.math.BigInteger;
 
 // Made by AdamSiedlecky
 @SpringBootApplication
