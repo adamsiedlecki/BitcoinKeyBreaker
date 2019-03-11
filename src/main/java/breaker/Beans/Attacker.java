@@ -23,19 +23,20 @@ public class Attacker {
     @Autowired
     BalanceSearcher balanceSearcher;
 
-
     private File file;
+    private File dictionary;
     private Float balance;
     private String succesfullKey;
+    private String bitcoinCliPath;
 
-    public void numberAttack(BigInteger seed){
+    public void numberAttack(BigInteger seed,String bitcoinCliPath){
         //BigInteger seed = BigInteger.valueOf(0);
         while(true) {
             seed = seed.add(BigInteger.ONE);
             String key = keyGenerator.getBruteForcePrivateKey(seed);
 
             //If there are any bitcoins on this private/public key, program should sout it and write it to a file.
-            balance = balanceSearcher.getBalance(key);
+            balance = balanceSearcher.getBalance(String.valueOf(seed),bitcoinCliPath);
             if(balance>0){
                 succesfullKey = key;
                 bitcoinsFoundReaction();
@@ -65,7 +66,30 @@ public class Attacker {
         }
     }
 
-    public void dictionaryAttack(String path){
+    public void dictionaryAttack(File dictionary,String bitcoinCliPath){
+        while(true) {
+            BufferedReader bf;
+            String seed = "";
+            try {
+                bf = new BufferedReader(new FileReader(dictionary));
+                seed = bf.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            String key = keyGenerator.getBruteForcePrivateKey(seed);
+
+
+            //If there are any bitcoins on this private/public key, program should sout it and write it to a file.
+            balance = balanceSearcher.getBalance(key,bitcoinCliPath);
+            if(balance>0){
+                succesfullKey = key;
+                bitcoinsFoundReaction();
+                break;
+            }
+            System.out.println(key);
+        }
     }
 }

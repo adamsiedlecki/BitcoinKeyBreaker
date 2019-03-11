@@ -3,6 +3,7 @@ package breaker.Beans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.util.Scanner;
 
@@ -13,6 +14,8 @@ public class ConsoleUI {
 
     @Autowired
     Attacker attecker;
+
+    private File dictionary;
 
     public void getStarted(){
         System.out.println(" /$$$$$$$  /$$   /$$                         /$$                      \n" +
@@ -45,7 +48,7 @@ public class ConsoleUI {
         System.out.println("By Adam Siedlecky");
         System.out.println("////////////////////////////////////////////////////////////////////////////////");
         System.out.println("To run this application, you need to have installed Bitcoin Core client.");
-        System.out.println("Enter a bitcoin-cli.exe location:   (for example D:\\BTC\\Bitcoin\\daemon\\bitcoin-cli.exe)");
+        System.out.println("Enter a bitcoin-cli.exe location:   (for example D:\\BTC\\Bitcoin\\daemon\\)");
         Scanner input = new Scanner(System.in);
         String path = input.nextLine();
         path = " D:\\BTC\\Bitcoin\\daemon\\bitcoin-cli.exe";
@@ -66,10 +69,20 @@ public class ConsoleUI {
                 System.out.println("Value isn't a number, try again: ");
                 init = input.nextLine();
             }
-            attecker.numberAttack(new BigInteger(init));
+            attecker.numberAttack(new BigInteger(init),path);
             System.out.println("Attacking in progress...");
         }else if(method.equals("2")){
             //Hashing records from dictionary
+            System.out.println("Enter a filepath to your dictionary (seed records must be in new lines)");
+            String filepath = input.nextLine();
+            dictionary = new File(filepath);
+            while(!dictionary.exists()){
+                System.out.println("Dictionary doesn't exist at this path. Please enter correct one: ");
+                filepath = input.nextLine();
+                dictionary = new File(filepath);
+            }
+            attecker.dictionaryAttack(dictionary,path);
+
         }
     }
     private boolean isNumeric(String strNum) {
