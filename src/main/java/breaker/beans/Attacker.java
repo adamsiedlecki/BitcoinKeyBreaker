@@ -29,8 +29,8 @@ public class Attacker {
     public void numberAttack(BigInteger seed,String bitcoinCliPath){
         //BigInteger seed = BigInteger.valueOf(0);
         while(true) {
-            seed = seed.add(BigInteger.ONE);
-            String key = keyGenerator.getBruteForcePrivateKey(seed);
+
+            String key = keyGenerator.convertToWIF(String.valueOf(seed));
 
             //If there are any bitcoins on this private/public key, program should sout it and write it to a file.
             balance = balanceSearcher.getBalance(String.valueOf(seed),bitcoinCliPath);
@@ -40,6 +40,7 @@ public class Attacker {
                 break;
             }
             System.out.println(key);
+            seed = seed.add(BigInteger.ONE);
         }
     }
 
@@ -76,7 +77,7 @@ public class Attacker {
                 e.printStackTrace();
             }
 
-            String key = keyGenerator.getBruteForcePrivateKey(seed);
+            String key = keyGenerator.convertToWIF(seed);
 
 
             //If there are any bitcoins on this private/public key, program should sout it and write it to a file.

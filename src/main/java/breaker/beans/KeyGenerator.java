@@ -1,5 +1,6 @@
 package breaker.beans;
 
+import org.bitcoinj.core.Base58;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import java.math.BigInteger;
 public class KeyGenerator {
 
 
-    private BigInteger numberSeed =  BigInteger.valueOf(1);
+    private BigInteger numberSeed;  //BigInteger.valueOf(1);
     private String stringSeed;
     private final BigInteger maxValue =   BigInteger.valueOf(2).pow(256);
 
@@ -17,31 +18,25 @@ public class KeyGenerator {
     private SHAUtility shaUtility;
 
 
+    private String privateWIF;
 
-    public String getBruteForcePrivateKey(BigInteger seed){
-
-            this.numberSeed = seed;
-
-        // Decimal number: System.out.println(numberSeed.toString(10));
-        String privateKey = shaUtility.getSHA(numberSeed.toString());
-        if(isValid(privateKey)){
-            //System.out.println(privateKey);
-        return privateKey;
+    public String convertToWIF(String seed){
+        System.out.println("Seed: "+seed);
+        while(seed.length()<64){
+            seed = "0"+seed;
         }
-        return null ;
-    }
+        String temporary = "80"+seed; //
+        //System.out.println("2. "+temporary);
+        String hashed = shaUtility.getSHA(temporary);
+        //System.out.println("3. "+hashed);
+        String hashedTwice = shaUtility.getSHA(hashed);
+        //System.out.println("4. "+hashedTwice);
+        String checksum = ""+hashedTwice.toCharArray()[0]+hashedTwice.toCharArray()[1]+hashedTwice.toCharArray()[2]+hashedTwice.toCharArray()[3]+hashedTwice.toCharArray()[4]+hashedTwice.toCharArray()[5]+hashedTwice.toCharArray()[6]+hashedTwice.toCharArray()[7];
+        //System.out.println("5. Checksum: "+checksum);
+        String temoporary = temporary+checksum;
+        String result = Base58.encode(shaUtility.hexStringToByteArray(temoporary));
 
-    public String getBruteForcePrivateKey(String seed){
-
-        this.stringSeed = seed;
-
-        System.out.println(numberSeed.toString(2));
-        String privateKey = shaUtility.getSHA(numberSeed.toString());
-        if(isValid(privateKey)){
-            //System.out.println(privateKey);
-            return privateKey;
-        }
-        return null ;
+        return result;
     }
 
     private boolean isValid(String privateKey){

@@ -69,6 +69,9 @@ public class ConsoleUI {
                 System.out.println("Value isn't a number, try again: ");
                 init = input.nextLine();
             }
+            if(!(init.length()%2==0)){
+                init = "0"+init;
+            }
             attecker.numberAttack(new BigInteger(init),path);
             System.out.println("Attacking in progress...");
         }else if(method.equals("2")){

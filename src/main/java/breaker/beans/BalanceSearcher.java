@@ -17,15 +17,18 @@ public class BalanceSearcher {
     @Autowired
     SHAUtility shaUtility;
 
+    @Autowired
+    KeyGenerator keyGenerator;
     private String publicKey;
     private String privateKey;
-
     private String privateWIF;
+
+
 
     public float getBalance(String privateKey,String bitcoinCliPath){
         this.privateKey = privateKey;
         String pub = getPublicKey(privateKey);
-        convertToWIF(privateKey);
+        privateWIF = keyGenerator.convertToWIF(privateKey);
         out.println("PrivateWIF :"+privateWIF);
         out.println("Public : "+pub);
 //        ProcessBuilder pb = new ProcessBuilder("bitcoin-cli.exe","getbalance",publicKey);
@@ -50,42 +53,7 @@ public class BalanceSearcher {
         return publicKey;
     }
 
-    private String convertToWIF(String privateKey){
-        privateKey = "0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D";
-        System.out.println("Seed: "+privateKey);
-        while(privateKey.length()<64){
-            privateKey = "0"+privateKey;
-        }
-        String temporary = "80"+ privateKey;
-        System.out.println("2. "+temporary);
-        String hashed = shaUtility.getSHA(temporary);
-        System.out.println("3. "+hashed);
-        String hashedTwice = shaUtility.getSHA(hashed);
-        System.out.println("4. "+hashedTwice);
-        String checksum = ""+hashedTwice.toCharArray()[0]+hashedTwice.toCharArray()[1]+hashedTwice.toCharArray()[2]+hashedTwice.toCharArray()[3]+hashedTwice.toCharArray()[4]+hashedTwice.toCharArray()[5]+hashedTwice.toCharArray()[6]+hashedTwice.toCharArray()[7];
-        System.out.println("5. Checksum: "+checksum);
-        String temoporary = temporary+checksum;
 
-
-//
-//            //I should count a base58 basing on bytearray from hex!!
-        System.out.println("Temp: "+temoporary);
-        BigInteger bi = new BigInteger(temporary,16);
-//        String hexTemporary = bi.toString(16);
-
-        String result = Base58.encode(temporary.getBytes());
-        System.out.println("Base58: "+result);
-        System.out.println("///////////////////");
-        privateWIF = result;
-        System.out.println("Seed: "+privateKey);
-        System.out.println("Hashed: "+hashed);
-        System.out.println("Hashedtwice: "+hashedTwice);
-        System.out.println("Temporary: "+temoporary);
-       // System.out.println("HEXTEMP: "+hexTemporary);
-//        String trueAddress = Base58.encode("800C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D507A5B8D".getBytes());
-//        System.out.println(trueAddress+" Should be equal to: 5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ" );
-        return privateWIF;
-    }
 
 
 
