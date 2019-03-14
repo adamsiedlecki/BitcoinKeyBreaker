@@ -47,32 +47,29 @@ public class ConsoleUI {
                 "                                                               ");
         System.out.println("By Adam Siedlecky");
         System.out.println("////////////////////////////////////////////////////////////////////////////////");
-        System.out.println("To run this application, you need to have installed Bitcoin Core client.");
-        System.out.println("Enter a bitcoin-cli.exe location:   (for example D:\\BTC\\Bitcoin\\daemon\\)");
+//        System.out.println("Enter a bitcoin-cli.exe location:   (for example D:\\BTC\\Bitcoin\\daemon\\)");
         Scanner input = new Scanner(System.in);
-        String path = input.nextLine();
-        path = " D:\\BTC\\Bitcoin\\daemon\\bitcoin-cli.exe";
+//        String path = input.nextLine();
+//        path = " D:\\BTC\\Bitcoin\\daemon\\bitcoin-cli.exe";
         System.out.println("Choose your way to guess private keys:");
         System.out.println("1. Bruteforce by hashing numbers like x, x+1, x+2 etc.");
-        System.out.println("2. Dictionary attack - you provide a dictionary file with words in new lines.");
+        System.out.println("2. Dictionary attack - you provide a dictionary file with words in new lines. UNSUPPORTED - DOESN'T WORK");
         String method = input.nextLine();
-        while(!method.equals("1")&&!method.equals("2")){
+        while(!method.equals("1")&&!method.equals("1")){
             System.out.println("Wrong value! Please enter 1 or 2 !");
             method = input.nextLine();
         }
 
         if(method.equals("1")){
             //Hashing numbers method
-            System.out.println("Enter initial value:");
+            System.out.println("Enter initial value: (must be positive, integer and diffrent drom 0 and 1 , becouse BitcoinJ requires that)");
             String init = input.nextLine();
-            while(!isNumeric(init)){
-                System.out.println("Value isn't a number, try again: ");
+            while(!isNumeric(init)||
+                    !isInteger(init)||init.equals("1")||init.equals("0")){
+                System.out.println("Value isn't a proper number, try again: ");
                 init = input.nextLine();
             }
-            if(!(init.length()%2==0)){
-                init = "0"+init;
-            }
-            attecker.numberAttack(new BigInteger(init),path);
+            attecker.numberAttack(new BigInteger(init));
             System.out.println("Attacking in progress...");
         }else if(method.equals("2")){
             //Hashing records from dictionary
@@ -84,11 +81,23 @@ public class ConsoleUI {
                 filepath = input.nextLine();
                 dictionary = new File(filepath);
             }
-            attecker.dictionaryAttack(dictionary,path);
+            attecker.dictionaryAttack(dictionary);
 
         }
     }
     private boolean isNumeric(String strNum) {
         return strNum.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }

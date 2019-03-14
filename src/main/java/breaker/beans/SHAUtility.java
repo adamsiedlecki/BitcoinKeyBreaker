@@ -8,13 +8,14 @@ public class SHAUtility {
 
     public String getSHA(String value){
         byte[] hexByte = hexStringToByteArray(value);
-
-        String hash = hash = DigestUtils.sha256Hex(hexByte);
-        System.out.println(hash);
+        String  hash = DigestUtils.sha256Hex(hexByte);
         return hash;
     }
 
     public static byte[] hexStringToByteArray(String hex) {
+        if(!(hex.length()%2==0)){
+            hex = "0"+hex;
+        }
         int l = hex.length();
         byte[] data = new byte[l/2];
         for (int i = 0; i < l; i += 2) {
