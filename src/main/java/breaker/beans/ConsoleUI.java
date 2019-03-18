@@ -63,13 +63,12 @@ public class ConsoleUI {
         if(method.equals("1")){
             //Hashing numbers method
             System.out.println("Enter initial value: (must be positive, integer and diffrent drom 0 and 1 , becouse BitcoinJ requires that)");
-            String init = input.nextLine();
-            while(!isNumeric(init)||
-                    !isInteger(init)||init.equals("1")||init.equals("0")){
+            BigInteger init = input.nextBigInteger();
+            while(!isNumeric(init.toString())|| new BigInteger("1").compareTo(init)==0||new BigInteger("0").compareTo(init)==0||new BigInteger("0").compareTo(init)==1){
                 System.out.println("Value isn't a proper number, try again: ");
-                init = input.nextLine();
+                init = input.nextBigInteger();
             }
-            attecker.numberAttack(new BigInteger(init));
+            attecker.numberAttack(init);
             System.out.println("Attacking in progress...");
         }else if(method.equals("2")){
             //Hashing records from dictionary

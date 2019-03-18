@@ -27,10 +27,15 @@ import static java.lang.System.*;
 public class BalanceSearcher {
 
     @Autowired
-    SHAUtility shaUtility;
+    private SHAUtility shaUtility;
 
     @Autowired
-    KeyGenerator keyGenerator;
+    private KeyGenerator keyGenerator;
+
+    @Autowired
+    private JSONReader jsonReader;
+
+
     private String publicKey;
     private String privateKey;
     private String privateWIF;
@@ -90,7 +95,7 @@ public class BalanceSearcher {
     private float getBalanceFromKey(String publicKey) throws IOException, JSONException {
         String balance = "";
 
-            JSONObject json = readJsonFromUrl("https://chain.so/api/v2/get_address_balance/BTC/"+publicKey+"/1");
+            JSONObject json = jsonReader.readJsonFromUrl("https://chain.so/api/v2/get_address_balance/BTC/"+publicKey+"/1");
             JSONObject data = json.getJSONObject("data");
             balance = (String) data.get("confirmed_balance");
 
@@ -102,7 +107,7 @@ public class BalanceSearcher {
     private float getBalanceFromKey2(){
         Integer balance = Integer.parseInt("0");
         try {
-            JSONObject json = readJsonFromUrl("https://blockchain.info/rawaddr/"+publicKey);
+            JSONObject json = jsonReader.readJsonFromUrl("https://blockchain.info/rawaddr/"+publicKey);
             balance = (Integer) json.get("final_balance");
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,24 +119,5 @@ public class BalanceSearcher {
         return bal;
     }
 
-    private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        } finally {
-            is.close();
-        }
-    }
 
-    private static String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
 }

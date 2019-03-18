@@ -32,4 +32,7 @@ public class Conf {
     public BalanceSearcher getBalanceSearcher(){
         return new BalanceSearcher();
     }
+
+    @Bean("jsonReader")
+    public JSONReader getJsonReader(){return new JSONReader();}
 }
