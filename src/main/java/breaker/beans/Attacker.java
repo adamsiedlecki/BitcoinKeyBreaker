@@ -27,13 +27,14 @@ public class Attacker {
     private String bitcoinCliPath;
     private String seedString;
 
-    public void numberAttack(BigInteger seed){
+    public void numberAttack(String seed){
         //BigInteger seed = BigInteger.valueOf(0);
 
 
         while(true) {
 
             seedString = String.valueOf(seed);
+
             while(seedString.length()<64){
                 seedString = "0"+seedString;
             }
@@ -47,7 +48,12 @@ public class Attacker {
                 bitcoinsFoundReaction();
                 break;
             }
-            seed = seed.add(BigInteger.ONE);
+            //System.out.println("PRE: "+seedString);
+            BigInteger i = new BigInteger(seedString,16);
+            i = i.add(BigInteger.ONE);
+            seed= i.toString(16);
+            //System.out.println("POST: "+seed);
+            //seed = seed.add(BigInteger.ONE);
         }
     }
 

@@ -63,10 +63,10 @@ public class ConsoleUI {
         if(method.equals("1")){
             //Hashing numbers method
             System.out.println("Enter initial value: (must be positive, integer and diffrent drom 0 and 1 , becouse BitcoinJ requires that)");
-            BigInteger init = input.nextBigInteger();
-            while(!isNumeric(init.toString())|| new BigInteger("1").compareTo(init)==0||new BigInteger("0").compareTo(init)==0||new BigInteger("0").compareTo(init)==1){
+            String init = input.nextLine();
+            while(!init.matches("-?[0-9a-fA-F]+")||init.length()>64||init.equals("1")||init.equals("2")){
                 System.out.println("Value isn't a proper number, try again: ");
-                init = input.nextBigInteger();
+                init = input.nextLine();
             }
             attecker.numberAttack(init);
             System.out.println("Attacking in progress...");
@@ -84,19 +84,5 @@ public class ConsoleUI {
 
         }
     }
-    private boolean isNumeric(String strNum) {
-        return strNum.matches("-?\\d+(\\.\\d+)?");
-    }
 
-    private static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
-        }
-        // only got here if we didn't return false
-        return true;
-    }
 }
