@@ -25,7 +25,7 @@ public class KeyGenerator {
         while(seed.length()<64){
             seed = "0"+seed;
         }
-        String temporary = "80"+seed+"01"; //
+        String temporary = "80"+seed; //
         //System.out.println("2. "+temporary);
         String hashed = shaUtility.getSHA(temporary);
         //System.out.println("3. "+hashed);
