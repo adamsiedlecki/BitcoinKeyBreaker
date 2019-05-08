@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.Scanner;
 
 
@@ -62,7 +61,7 @@ public class ConsoleUI {
 
         if(method.equals("1")){
             //Hashing numbers method
-            System.out.println("Enter initial value: (must be positive, integer and diffrent drom 0 and 1 , becouse BitcoinJ requires that)");
+            System.out.println("Enter initial value: (must be positive, hexadecimal and diffrent drom 0 and 1 , becouse BitcoinJ requires that)");
             String init = input.nextLine();
             while(!init.matches("-?[0-9a-fA-F]+")||init.length()>64||init.equals("1")||init.equals("2")){
                 System.out.println("Value isn't a proper number, try again: ");
