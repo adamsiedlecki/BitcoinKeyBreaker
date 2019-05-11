@@ -35,4 +35,9 @@ public class Conf {
 
     @Bean("jsonReader")
     public JSONReader getJsonReader(){return new JSONReader();}
+
+    @Bean("rangeNoter")
+    public RangeNoter getRangeNoter() {
+        return new RangeNoter();
+    }
 }

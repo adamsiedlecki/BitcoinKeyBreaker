@@ -20,6 +20,10 @@ public class Attacker {
     @Autowired
     BalanceSearcher balanceSearcher;
 
+    @Autowired
+    RangeNoter rangeNoter;
+
+    private boolean isFirstSeed = true;
     private File file;
     private File dictionary;
     private Float balance;
@@ -48,12 +52,19 @@ public class Attacker {
                 bitcoinsFoundReaction();
                 break;
             }
+            //There is a need to tell which numbers (seed) are checked. So it creates a file and note a first and last value
+            if (isFirstSeed) {
+                rangeNoter.saveFirst(seedString);
+            }
+            rangeNoter.saveLast(seedString);
+
             //System.out.println("PRE: "+seedString);
             BigInteger i = new BigInteger(seedString,16);
             i = i.add(BigInteger.ONE);
             seed= i.toString(16);
             //System.out.println("POST: "+seed);
             //seed = seed.add(BigInteger.ONE);
+            isFirstSeed = false;
         }
     }
 

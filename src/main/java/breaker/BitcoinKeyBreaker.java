@@ -13,8 +13,11 @@ public class BitcoinKeyBreaker {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Conf.class);
 
         ConsoleUI consoleUI = context.getBean("consoleUI",ConsoleUI.class);
-        consoleUI.getStarted();
-
+        if (args.length == 2) {
+            consoleUI.getStarted(args[0], args[1]);
+        } else {
+            consoleUI.getStarted("0", "0");
+        }
 
     }
 }
