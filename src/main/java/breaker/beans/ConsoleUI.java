@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.Scanner;
 
 
-
 @Component("consoleUI")
 public class ConsoleUI {
 

@@ -9,32 +9,34 @@ import org.springframework.context.annotation.Configuration;
 public class Conf {
 
     @Bean("bruteForceKeyGenerator")
-    public KeyGenerator getBitcoinKeyGenerator(){
+    public KeyGenerator getBitcoinKeyGenerator() {
         return new KeyGenerator();
     }
 
     @Bean("attacker")
-    public Attacker getAttacker(){
-            return new Attacker();
+    public Attacker getAttacker() {
+        return new Attacker();
     }
 
     @Bean("shaUtility")
-    public SHAUtility getSHAUtility(){
-        return  new SHAUtility();
+    public SHAUtility getSHAUtility() {
+        return new SHAUtility();
     }
 
     @Bean("consoleUI")
-    public ConsoleUI getConsoleUI(){
+    public ConsoleUI getConsoleUI() {
         return new ConsoleUI();
     }
 
     @Bean
-    public BalanceSearcher getBalanceSearcher(){
+    public BalanceSearcher getBalanceSearcher() {
         return new BalanceSearcher();
     }
 
     @Bean("jsonReader")
-    public JSONReader getJsonReader(){return new JSONReader();}
+    public JSONReader getJsonReader() {
+        return new JSONReader();
+    }
 
     @Bean("rangeNoter")
     public RangeNoter getRangeNoter() {

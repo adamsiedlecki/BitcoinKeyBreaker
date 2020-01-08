@@ -3,25 +3,15 @@ package breaker.beans;
 
 import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.IOException;
 import java.math.BigInteger;
-import java.net.URL;
-import java.nio.charset.Charset;
 
-
-
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.NetworkParameters;
-
-
-
-import static java.lang.System.*;
+import static java.lang.System.out;
 
 @Component
 public class BalanceSearcher {
@@ -41,41 +31,41 @@ public class BalanceSearcher {
     private String privateWIF;
     private BigInteger counter;
 
-    public BalanceSearcher(){
-     counter = BigInteger.ZERO;
+    public BalanceSearcher() {
+        counter = BigInteger.ZERO;
     }
 
-    public float getBalance(String privateKey){
+    public float getBalance(String privateKey) {
         this.privateKey = privateKey;
         counter = counter.add(BigInteger.ONE);
         privateWIF = keyGenerator.convertToWIF(privateKey);
         publicKey = getPublicKey(privateWIF);
-       displayKeyPair();
+        displayKeyPair();
         float balance;
         boolean afterChainSoFail = false;
-       try{
-           if(afterChainSoFail){
-           throw    new Exception("ChainSo is unavailable ");
-           }
-           // request to Chain.so - it blocks after 11 times
-           balance = getBalanceFromKey(publicKey);
-       }catch(Exception e){
-           afterChainSoFail = true;
-           // request to Blockchain.com
-           balance = getBalanceFromKey2();
-       }
+        try {
+            if (afterChainSoFail) {
+                throw new Exception("ChainSo is unavailable ");
+            }
+            // request to Chain.so - it blocks after 11 times
+            balance = getBalanceFromKey(publicKey);
+        } catch (Exception e) {
+            afterChainSoFail = true;
+            // request to Blockchain.com
+            balance = getBalanceFromKey2();
+        }
 
 
         return balance;
     }
 
-    private void displayKeyPair(){
-        out.println(counter+" PrivateWIF :"+privateWIF);
+    private void displayKeyPair() {
+        out.println(counter + " PrivateWIF :" + privateWIF);
         System.out.println("*---------------------*");
-        out.println(counter+" Public : "+publicKey);
+        out.println(counter + " Public : " + publicKey);
     }
 
-    private String getPublicKey(String privateKey){
+    private String getPublicKey(String privateKey) {
 
         NetworkParameters params = MainNetParams.get();
         ECKey key;
@@ -95,26 +85,26 @@ public class BalanceSearcher {
     private float getBalanceFromKey(String publicKey) throws IOException, JSONException {
         String balance = "";
 
-            JSONObject json = jsonReader.readJsonFromUrl("https://chain.so/api/v2/get_address_balance/BTC/"+publicKey+"/1");
-            JSONObject data = json.getJSONObject("data");
-            balance = (String) data.get("confirmed_balance");
+        JSONObject json = jsonReader.readJsonFromUrl("https://chain.so/api/v2/get_address_balance/BTC/" + publicKey + "/1");
+        JSONObject data = json.getJSONObject("data");
+        balance = (String) data.get("confirmed_balance");
 
-        System.out.println("BALANCE: "+balance);
+        System.out.println("BALANCE: " + balance);
         float bal = Float.valueOf(balance);
         return bal;
     }
 
-    private float getBalanceFromKey2(){
+    private float getBalanceFromKey2() {
         Integer balance = Integer.parseInt("0");
         try {
-            JSONObject json = jsonReader.readJsonFromUrl("https://blockchain.info/rawaddr/"+publicKey);
+            JSONObject json = jsonReader.readJsonFromUrl("https://blockchain.info/rawaddr/" + publicKey);
             balance = (Integer) json.get("final_balance");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("BALANCE: "+balance);
+        System.out.println("BALANCE: " + balance);
         float bal = Float.valueOf(balance);
         return bal;
     }
