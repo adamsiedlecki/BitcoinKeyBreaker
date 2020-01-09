@@ -5,26 +5,16 @@ import org.bitcoinj.core.*;
 import org.bitcoinj.params.MainNetParams;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.math.BigInteger;
 
 import static java.lang.System.out;
 
-@Component
 public class BalanceSearcher {
 
-    @Autowired
-    private SHAUtility shaUtility;
-
-    @Autowired
-    private KeyGenerator keyGenerator;
-
-    @Autowired
-    private JSONReader jsonReader;
-
+    private KeyGenerator keyGenerator = new KeyGenerator();
+    private JSONReader jsonReader = new JSONReader();
 
     private String publicKey;
     private String privateKey;

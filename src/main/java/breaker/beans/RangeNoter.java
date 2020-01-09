@@ -1,10 +1,8 @@
 package breaker.beans;
 
-import org.springframework.stereotype.Component;
 
 import java.io.*;
 
-@Component("rangeNoter")
 public class RangeNoter {
 
     File rangeRaport;

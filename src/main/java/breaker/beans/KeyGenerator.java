@@ -1,20 +1,16 @@
 package breaker.beans;
 
 import org.bitcoinj.core.Base58;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 
-@Component
 public class KeyGenerator {
 
 
     private final BigInteger maxValue = BigInteger.valueOf(2).pow(256);
     private BigInteger numberSeed;
     private String stringSeed;
-    @Autowired
-    private SHAUtility shaUtility;
+    private SHAUtility shaUtility = new SHAUtility();
 
     public String convertToWIF(String seed) {
         //System.out.println("Seed: "+seed);
@@ -30,7 +26,7 @@ public class KeyGenerator {
         String checksum = "" + hashedTwice.toCharArray()[0] + hashedTwice.toCharArray()[1] + hashedTwice.toCharArray()[2] + hashedTwice.toCharArray()[3] + hashedTwice.toCharArray()[4] + hashedTwice.toCharArray()[5] + hashedTwice.toCharArray()[6] + hashedTwice.toCharArray()[7];
         //System.out.println("5. Checksum: "+checksum);
         String temoporary = temporary + checksum;
-        String result = Base58.encode(shaUtility.hexStringToByteArray(temoporary));
+        String result = Base58.encode(SHAUtility.hexStringToByteArray(temoporary));
 
         return result;
     }

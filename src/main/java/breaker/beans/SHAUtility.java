@@ -1,9 +1,7 @@
 package breaker.beans;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.stereotype.Component;
 
-@Component
 public class SHAUtility {
 
     public static byte[] hexStringToByteArray(String hex) {

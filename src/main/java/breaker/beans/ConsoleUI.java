@@ -1,55 +1,22 @@
 package breaker.beans;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import breaker.configuration.Conf;
 
 import java.io.File;
 import java.util.Scanner;
 
-
-@Component("consoleUI")
 public class ConsoleUI {
 
-    @Autowired
-    Attacker attacker;
+    Attacker attacker = new Attacker();
 
     private File dictionary;
 
     public void getStarted(String mode, String initialValue) {
-        System.out.println(" /$$$$$$$  /$$   /$$                         /$$                      \n" +
-                "| $$__  $$|__/  | $$                        |__/                      \n" +
-                "| $$  \\ $$ /$$ /$$$$$$    /$$$$$$$  /$$$$$$  /$$ /$$$$$$$             \n" +
-                "| $$$$$$$ | $$|_  $$_/   /$$_____/ /$$__  $$| $$| $$__  $$            \n" +
-                "| $$__  $$| $$  | $$    | $$      | $$  \\ $$| $$| $$  \\ $$            \n" +
-                "| $$  \\ $$| $$  | $$ /$$| $$      | $$  | $$| $$| $$  | $$            \n" +
-                "| $$$$$$$/| $$  |  $$$$/|  $$$$$$$|  $$$$$$/| $$| $$  | $$            \n" +
-                "|_______/ |__/   \\___/   \\_______/ \\______/ |__/|__/  |__/            \n" +
-                " /$$   /$$                                                            \n" +
-                "| $$  /$$/                                                            \n" +
-                "| $$ /$$/   /$$$$$$  /$$   /$$                                        \n" +
-                "| $$$$$/   /$$__  $$| $$  | $$                                        \n" +
-                "| $$  $$  | $$$$$$$$| $$  | $$                                        \n" +
-                "| $$\\  $$ | $$_____/| $$  | $$                                        \n" +
-                "| $$ \\  $$|  $$$$$$$|  $$$$$$$                                        \n" +
-                "|__/  \\__/ \\_______/ \\____  $$                                        \n" +
-                "                     /$$  | $$                                        \n" +
-                " /$$$$$$$           |  $$$$$$/           /$$                          \n" +
-                "| $$__  $$           \\______/           | $$                          \n" +
-                "| $$  \\ $$  /$$$$$$   /$$$$$$   /$$$$$$ | $$   /$$  /$$$$$$   /$$$$$$ \n" +
-                "| $$$$$$$  /$$__  $$ /$$__  $$ |____  $$| $$  /$$/ /$$__  $$ /$$__  $$\n" +
-                "| $$__  $$| $$  \\__/| $$$$$$$$  /$$$$$$$| $$$$$$/ | $$$$$$$$| $$  \\__/\n" +
-                "| $$  \\ $$| $$      | $$_____/ /$$__  $$| $$_  $$ | $$_____/| $$      \n" +
-                "| $$$$$$$/| $$      |  $$$$$$$|  $$$$$$$| $$ \\  $$|  $$$$$$$| $$      \n" +
-                "|_______/ |__/       \\_______/ \\_______/|__/  \\__/ \\_______/|__/      \n" +
-                "                                                                      \n" +
-                "                                                               ");
+        System.out.println(Conf.BANNER);
         System.out.println("By Adam Siedlecky");
         if ("0".equals(mode)) {
             System.out.println("////////////////////////////////////////////////////////////////////////////////");
-//        System.out.println("Enter a bitcoin-cli.exe location:   (for example D:\\BTC\\Bitcoin\\daemon\\)");
             Scanner input = new Scanner(System.in);
-//        String path = input.nextLine();
-//        path = " D:\\BTC\\Bitcoin\\daemon\\bitcoin-cli.exe";
             System.out.println("Choose your way to guess private keys:");
             System.out.println("1. Bruteforce by hashing numbers like x, x+1, x+2 etc.");
             System.out.println("2. Dictionary attack - you provide a dictionary file with words in new lines. UNSUPPORTED - DOESN'T WORK");

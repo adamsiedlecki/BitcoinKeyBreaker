@@ -1,8 +1,5 @@
 package breaker.beans;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.*;
 import java.math.BigInteger;
 import java.text.DateFormat;
@@ -11,17 +8,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@Component("attacker")
 public class Attacker {
 
-    @Autowired
-    KeyGenerator keyGenerator;
-
-    @Autowired
-    BalanceSearcher balanceSearcher;
-
-    @Autowired
-    RangeNoter rangeNoter;
+    private KeyGenerator keyGenerator = new KeyGenerator();
+    private BalanceSearcher balanceSearcher = new BalanceSearcher();
+    private RangeNoter rangeNoter = new RangeNoter();
 
     private boolean isFirstSeed = true;
     private File file;

@@ -1,45 +1,33 @@
 package breaker.configuration;
 
-import breaker.beans.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-
 public class Conf {
-
-    @Bean("bruteForceKeyGenerator")
-    public KeyGenerator getBitcoinKeyGenerator() {
-        return new KeyGenerator();
-    }
-
-    @Bean("attacker")
-    public Attacker getAttacker() {
-        return new Attacker();
-    }
-
-    @Bean("shaUtility")
-    public SHAUtility getSHAUtility() {
-        return new SHAUtility();
-    }
-
-    @Bean("consoleUI")
-    public ConsoleUI getConsoleUI() {
-        return new ConsoleUI();
-    }
-
-    @Bean
-    public BalanceSearcher getBalanceSearcher() {
-        return new BalanceSearcher();
-    }
-
-    @Bean("jsonReader")
-    public JSONReader getJsonReader() {
-        return new JSONReader();
-    }
-
-    @Bean("rangeNoter")
-    public RangeNoter getRangeNoter() {
-        return new RangeNoter();
-    }
+    public static final String SERVER_ADDRESS = "";
+    public static final String API_1_ADDRESS = "";
+    public static final String BANNER = " /$$$$$$$  /$$   /$$                         /$$                      \n" +
+            "| $$__  $$|__/  | $$                        |__/                      \n" +
+            "| $$  \\ $$ /$$ /$$$$$$    /$$$$$$$  /$$$$$$  /$$ /$$$$$$$             \n" +
+            "| $$$$$$$ | $$|_  $$_/   /$$_____/ /$$__  $$| $$| $$__  $$            \n" +
+            "| $$__  $$| $$  | $$    | $$      | $$  \\ $$| $$| $$  \\ $$            \n" +
+            "| $$  \\ $$| $$  | $$ /$$| $$      | $$  | $$| $$| $$  | $$            \n" +
+            "| $$$$$$$/| $$  |  $$$$/|  $$$$$$$|  $$$$$$/| $$| $$  | $$            \n" +
+            "|_______/ |__/   \\___/   \\_______/ \\______/ |__/|__/  |__/            \n" +
+            " /$$   /$$                                                            \n" +
+            "| $$  /$$/                                                            \n" +
+            "| $$ /$$/   /$$$$$$  /$$   /$$                                        \n" +
+            "| $$$$$/   /$$__  $$| $$  | $$                                        \n" +
+            "| $$  $$  | $$$$$$$$| $$  | $$                                        \n" +
+            "| $$\\  $$ | $$_____/| $$  | $$                                        \n" +
+            "| $$ \\  $$|  $$$$$$$|  $$$$$$$                                        \n" +
+            "|__/  \\__/ \\_______/ \\____  $$                                        \n" +
+            "                     /$$  | $$                                        \n" +
+            " /$$$$$$$           |  $$$$$$/           /$$                          \n" +
+            "| $$__  $$           \\______/           | $$                          \n" +
+            "| $$  \\ $$  /$$$$$$   /$$$$$$   /$$$$$$ | $$   /$$  /$$$$$$   /$$$$$$ \n" +
+            "| $$$$$$$  /$$__  $$ /$$__  $$ |____  $$| $$  /$$/ /$$__  $$ /$$__  $$\n" +
+            "| $$__  $$| $$  \\__/| $$$$$$$$  /$$$$$$$| $$$$$$/ | $$$$$$$$| $$  \\__/\n" +
+            "| $$  \\ $$| $$      | $$_____/ /$$__  $$| $$_  $$ | $$_____/| $$      \n" +
+            "| $$$$$$$/| $$      |  $$$$$$$|  $$$$$$$| $$ \\  $$|  $$$$$$$| $$      \n" +
+            "|_______/ |__/       \\_______/ \\_______/|__/  \\__/ \\_______/|__/      \n" +
+            "                                                                      \n" +
+            "                                                               ";
 }
